@@ -43,7 +43,8 @@ public class Gui extends JFrame {
 		setBackground(new Color(0, 0, 0, 0));
 		this.keyBot = keyBot;
 
-		JPanel qwertyButtonsPanel = new JPanel(new GridLayout(4, 1, 5, 5));
+		JPanel qwertyButtonsPanel = new JPanel(
+				new GridLayout(4, 1, GAP_BETWEEN_BUTTONS, GAP_BETWEEN_BUTTONS));
 		qwertyButtonsPanel.setOpaque(false);
 
 		qwertyButtonsPanel.add(createNumbersRow());
@@ -166,7 +167,7 @@ public class Gui extends JFrame {
 	}
 
 	private JPanel createZxcvRow() {
-		JPanel outer = new JPanel(new BorderLayout(GAP_BETWEEN_BUTTONS + 2, GAP_BETWEEN_BUTTONS));
+		JPanel outer = new JPanel(new BorderLayout(GAP_BETWEEN_BUTTONS, GAP_BETWEEN_BUTTONS));
 		outer.setOpaque(false);
 		outer.add(createCtrlPanel(), BorderLayout.LINE_START);
 
@@ -197,11 +198,20 @@ public class Gui extends JFrame {
 	private Component createCtrlPanel() {
 		JToggleButton button = new JToggleButton("Ctrl");
 		button.setEnabled(false);
+
 		Timer timer = new Timer(2, e -> {
 			button.setSelected(keyBot.isCtrlDown());
 		});
 
 		decorateButton(button);
+
+		// OCD kicks in
+		// Without these, layout spikes
+		button.setMargin(new Insets(button.getMargin().top, button.getMargin().left - 1,
+				button.getMargin().bottom, button.getMargin().right - 1));
+		button.setPreferredSize(new Dimension(button.getPreferredSize().width + 4,
+				button.getPreferredSize().height));
+
 		timer.start();
 		return button;
 	}
