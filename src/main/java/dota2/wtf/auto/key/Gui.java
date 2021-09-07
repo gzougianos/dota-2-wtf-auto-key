@@ -28,6 +28,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+@SuppressWarnings("serial")
 public class Gui extends JFrame {
 	private static final Dimension BUTTON_SIZE = new Dimension(35, 22);
 	private static final int GAP_BETWEEN_BUTTONS = 2;
