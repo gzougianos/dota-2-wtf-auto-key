@@ -19,4 +19,6 @@ While the <kbd>CTRL</kbd> button is held pressed, none of the keys is pressed in
 ##
 If you find any bugs or you want any improvements, let me know.
 
+[![video](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-1.png)](http://www.wtfpl.net/ "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE")
+
 
