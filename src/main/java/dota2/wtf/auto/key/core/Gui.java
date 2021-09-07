@@ -9,7 +9,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -35,6 +39,7 @@ public class Gui extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setAlwaysOnTop(true);
+		setupIconImage();
 		setBackground(new Color(0, 0, 0, 0));
 		this.keyBot = keyBot;
 
@@ -53,6 +58,17 @@ public class Gui extends JFrame {
 		pack();
 
 		placeTopRightOnScreen();
+	}
+
+	private void setupIconImage() {
+		InputStream imageInputStream = getClass().getClassLoader()
+				.getResourceAsStream("favicon_32.png");
+		try {
+			BufferedImage favicon = ImageIO.read(imageInputStream);
+			setIconImage(favicon);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void placeTopRightOnScreen() {
