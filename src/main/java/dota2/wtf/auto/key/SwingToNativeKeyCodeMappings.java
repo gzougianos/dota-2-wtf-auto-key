@@ -5,7 +5,8 @@ import java.util.OptionalInt;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
-public class SwingToNativeKeyCodeMappings {
+public enum SwingToNativeKeyCodeMappings {
+	;
 
 	public static OptionalInt getSwingCodeFromNative(final int nativeCode) {
 		int code = getSwingCodeFromNative2(nativeCode);
