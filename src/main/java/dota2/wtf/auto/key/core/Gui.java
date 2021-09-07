@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,7 +57,7 @@ public class Gui extends JFrame {
 
 		pack();
 
-		placeTopRightOnScreen();
+		placeTopLeftOnScreen();
 	}
 
 	private void setupIconImage() {
@@ -72,10 +71,10 @@ public class Gui extends JFrame {
 		}
 	}
 
-	private void placeTopRightOnScreen() {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int targetX = screenSize.width - getWidth() - 10;
-		int targetY = 40;
+	private void placeTopLeftOnScreen() {
+		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int targetX = 1;
+		int targetY = 105;
 		setLocation(targetX, targetY);
 	}
 
@@ -96,6 +95,7 @@ public class Gui extends JFrame {
 		numbersRowPanel.add(createButton(NativeKeyEvent.VC_8));
 		numbersRowPanel.add(createButton(NativeKeyEvent.VC_9));
 		numbersRowPanel.add(createButton(NativeKeyEvent.VC_0));
+
 		return numbersRowPanel;
 	}
 
@@ -141,7 +141,8 @@ public class Gui extends JFrame {
 		JPanel qwerRow = new JPanel(new GridLayout(1, 0, GAP_BETWEEN_BUTTONS, GAP_BETWEEN_BUTTONS));
 		qwerRow.setOpaque(false);
 
-		qwerRow.add(createButton(NativeKeyEvent.VC_A));
+		JToggleButton sizeSample = createButton(NativeKeyEvent.VC_A);
+		qwerRow.add(sizeSample);
 		qwerRow.add(createButton(NativeKeyEvent.VC_S));
 		qwerRow.add(createButton(NativeKeyEvent.VC_D));
 		qwerRow.add(createButton(NativeKeyEvent.VC_F));
@@ -150,7 +151,15 @@ public class Gui extends JFrame {
 		qwerRow.add(createButton(NativeKeyEvent.VC_J));
 		qwerRow.add(createButton(NativeKeyEvent.VC_K));
 		qwerRow.add(createButton(NativeKeyEvent.VC_L));
-		qwerRow.add(space());
+
+		JButton b = new JButton("↹");
+		decorateButton(b);
+		b.setMargin(new Insets(b.getMargin().top, b.getMargin().left - 7, b.getMargin().bottom,
+				b.getMargin().right - 7));
+		b.setPreferredSize(sizeSample.getPreferredSize());
+
+		new ComponentMover(Gui.this, b);
+		qwerRow.add(b);
 
 		outer.add(qwerRow, BorderLayout.LINE_END);
 		return outer;
@@ -254,6 +263,7 @@ public class Gui extends JFrame {
 	}
 
 	private void decorateButton(AbstractButton button) {
+		button.setOpaque(false);
 		button.setFocusPainted(false);
 		button.addChangeListener(e -> {
 			if (button.isSelected()) {
