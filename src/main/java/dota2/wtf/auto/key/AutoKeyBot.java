@@ -1,6 +1,6 @@
-package dota2.wtf.auto.key.core;
+package dota2.wtf.auto.key;
 
-import static dota2.wtf.auto.key.core.SwingToNativeKeyCodeMappings.getSwingCodeFromNative;
+import static dota2.wtf.auto.key.SwingToNativeKeyCodeMappings.getSwingCodeFromNative;
 
 import java.awt.AWTException;
 import java.awt.Robot;

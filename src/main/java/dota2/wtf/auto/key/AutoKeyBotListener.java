@@ -1,4 +1,4 @@
-package dota2.wtf.auto.key.core;
+package dota2.wtf.auto.key;
 
 public interface AutoKeyBotListener {
 

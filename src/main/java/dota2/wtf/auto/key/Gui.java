@@ -1,4 +1,4 @@
-package dota2.wtf.auto.key.core;
+package dota2.wtf.auto.key;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
@@ -157,7 +157,7 @@ public class Gui extends JFrame {
 		b.setMargin(new Insets(b.getMargin().top, b.getMargin().left - 7, b.getMargin().bottom,
 				b.getMargin().right - 7));
 		b.setPreferredSize(sizeSample.getPreferredSize());
-
+		b.setForeground(Color.GREEN.darker());
 		new ComponentMover(Gui.this, b);
 		qwerRow.add(b);
 
