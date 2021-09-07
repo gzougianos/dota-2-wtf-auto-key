@@ -11,7 +11,6 @@ import java.util.OptionalInt;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -22,13 +21,12 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 public class AutoKeyBot {
-	private static final int DEFAULT_SLEEP_TIME = 20;
+	private static final int SLEEP_TIME_BETWEEN_PRESSES = 20;
 	private final List<AutoKeyBotListener> listeners = new LinkedList<AutoKeyBotListener>();
 	private final Set<Integer> enabledKeys = ConcurrentHashMap.newKeySet();
 	private final AtomicBoolean isCtrlPressed = new AtomicBoolean();
 	private final Robot robot;
 	private final IsDotaWindowActiveGetter isDotaWindowActiveGetter;
-	private final AtomicInteger sleepTime = new AtomicInteger(DEFAULT_SLEEP_TIME);
 
 	public AutoKeyBot(IsDotaWindowActiveGetter isDotaWindowActiveGetter)	throws NativeHookException,
 																			AWTException
@@ -44,14 +42,6 @@ public class AutoKeyBot {
 			}
 		});
 		pressingThread.start();
-	}
-
-	public int getSleepTime() {
-		return sleepTime.get();
-	}
-
-	public void setSleepTime(int sleepTime) {
-		this.sleepTime.set(sleepTime);
 	}
 
 	public void disableAll() {
@@ -91,7 +81,7 @@ public class AutoKeyBot {
 	}
 
 	private void sleep() throws InterruptedException {
-		Thread.sleep(sleepTime.get());
+		Thread.sleep(SLEEP_TIME_BETWEEN_PRESSES);
 	}
 
 	public void addKeyListener(AutoKeyBotListener listener) {
