@@ -1,15 +1,23 @@
 package dota2.wtf.auto.key.core;
 
 import java.awt.event.KeyEvent;
+import java.util.OptionalInt;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
 public class SwingToNativeKeyCodeMappings {
 
+	public static OptionalInt getSwingCodeFromNative(final int nativeCode) {
+		int code = getSwingCodeFromNative2(nativeCode);
+		if (code == -1)
+			return OptionalInt.empty();
+		return OptionalInt.of(code);
+	}
+
 	/*
 	 * From https://github.com/kwhat/jnativehook/issues/106
 	 */
-	public static int getSwingCodeFromNative(final int nativeCode) {
+	private static int getSwingCodeFromNative2(final int nativeCode) {
 		switch (nativeCode) {
 			case NativeKeyEvent.VC_1:
 				return KeyEvent.VK_1;
@@ -119,9 +127,14 @@ public class SwingToNativeKeyCodeMappings {
 			case NativeKeyEvent.VC_Z:
 				return KeyEvent.VK_Z;
 
+			case NativeKeyEvent.VC_BACKQUOTE:
+				return KeyEvent.VK_BACK_QUOTE;
+
+			case NativeKeyEvent.VC_SPACE:
+				return KeyEvent.VK_SPACE;
+
 			default:
-				String msg = "Swing KeyEvent code not found for native code %s";
-				throw new IllegalArgumentException(String.format(msg, nativeCode));
+				return -1;
 		}
 	}
 

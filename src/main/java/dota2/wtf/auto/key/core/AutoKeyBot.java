@@ -1,9 +1,13 @@
 package dota2.wtf.auto.key.core;
 
+import static dota2.wtf.auto.key.core.SwingToNativeKeyCodeMappings.getSwingCodeFromNative;
+
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -50,6 +54,14 @@ public class AutoKeyBot {
 		this.sleepTime.set(sleepTime);
 	}
 
+	public void disableAll() {
+		Iterator<Integer> iterator = enabledKeys.iterator();
+		while (iterator.hasNext()) {
+			Integer nativeCode = iterator.next();
+			disableAndNotify(nativeCode);
+		}
+	}
+
 	private void pressKeys() throws InterruptedException {
 		while (true) {
 			sleep();
@@ -60,15 +72,22 @@ public class AutoKeyBot {
 				continue;
 
 			for (int nativeKey : enabledKeys) {
-				int swingCode = SwingToNativeKeyCodeMappings.getSwingCodeFromNative(nativeKey);
+				OptionalInt swingCode = getSwingCodeFromNative(nativeKey);
+
+				if (!swingCode.isPresent())
+					continue;
 
 				if (!isCtrlPressed.get() && !dotaInactive()) {
-					robot.keyPress(swingCode);
-					robot.keyRelease(swingCode);
+					robot.keyPress(swingCode.getAsInt());
+					robot.keyRelease(swingCode.getAsInt());
 				}
 				sleep();
 			}
 		}
+	}
+
+	public boolean isCtrlDown() {
+		return isCtrlPressed.get();
 	}
 
 	private void sleep() throws InterruptedException {
@@ -83,11 +102,8 @@ public class AutoKeyBot {
 		listeners.remove(listener);
 	}
 
-	public void enableKey(int nativeKeyCode) {
-		if (isEnabled(nativeKeyCode))
-			return;
-
-		enableAndNotify(nativeKeyCode);
+	public void changeKeyState(int nativeKeyCode) {
+		changeStateAndNotify(nativeKeyCode);
 	}
 
 	private void changeStateAndNotify(int nativeKeyCode) {
@@ -120,7 +136,11 @@ public class AutoKeyBot {
 		Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 		logger.setLevel(Level.OFF);
 
-		GlobalScreen.registerNativeHook();
+		try {
+			GlobalScreen.registerNativeHook();
+		} catch (UnsatisfiedLinkError e) {
+			throw new NativeHookException(e);
+		}
 
 		//@formatter:off
 		GlobalScreen.addNativeKeyListener(new KeyListener());
@@ -170,4 +190,5 @@ public class AutoKeyBot {
 					|| ev.getKeyCode() == NativeKeyEvent.VC_CONTROL_R;
 		}
 	}
+
 }
