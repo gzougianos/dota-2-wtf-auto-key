@@ -6,7 +6,7 @@
 
 [![video](http://img.youtube.com/vi/ZpIwLyXTqsk/0.jpg)](https://www.youtube.com/watch?v=ZpIwLyXTqsk "Dota 2 - WTF Reborn arcade auto key")
 
-## How it works:
+## How to use:
 You can enable/disable which keys will be pressed from the GUI, or with a shortcut by pressing <kbd>CTRL</kbd> + <kbd>key_to_spam</kbd>.
 The keys are pressed only when you are in the Dota 2 window.
 While the <kbd>CTRL</kbd> button is held pressed, none of the keys is pressed in game.
@@ -19,6 +19,6 @@ While the <kbd>CTRL</kbd> button is held pressed, none of the keys is pressed in
 ##
 If you find any bugs or you want any improvements, let me know.
 
-[![video](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-1.png)](http://www.wtfpl.net/ "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE")
+[![licence](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-1.png)](http://www.wtfpl.net/ "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE")
 
 
